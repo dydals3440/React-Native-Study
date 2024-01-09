@@ -12,6 +12,10 @@ export default function App() {
       { text: text, key: Math.random().toString() },
     ]);
   };
+
+  const deleteGoalHandler = () => {
+    return console.log('delete');
+  };
   return (
     <View style={styles.appContainer}>
       <GoalInput onAddGoal={addGoalHandler} />
@@ -19,7 +23,12 @@ export default function App() {
         <FlatList
           data={courseGoals}
           renderItem={(itemData) => {
-            return <GoalItem itemData={itemData} />;
+            return (
+              <GoalItem
+                text={itemData.item.text}
+                onDeleteItem={deleteGoalHandler}
+              />
+            );
           }}
           // FlatList가 함수를 호출할 떄 제공되는 값 렌더링 되는목록마다 이 함수 호출
           keyExtractor={(item, index) => {
