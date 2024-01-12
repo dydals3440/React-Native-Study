@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
 import GoalInput from './components/GoalInput';
 import { GoalItem } from './components/GoalItem';
 
@@ -30,38 +32,41 @@ export default function App() {
   };
 
   return (
-    <View style={styles.appContainer}>
-      <Button
-        title='Add New Goal'
-        color='#5e0acc'
-        onPress={startAddGoalHandler}
-      />
-      <GoalInput
-        visible={modalIsVisible}
-        onAddGoal={addGoalHandler}
-        onCancel={endAddGoalHandler}
-      />
-      <View style={styles.goalsContainer}>
-        <FlatList
-          data={courseGoals}
-          renderItem={(itemData) => {
-            return (
-              <GoalItem
-                id={itemData.item.id}
-                text={itemData.item.text}
-                onDeleteItem={deleteGoalHandler}
-              />
-            );
-          }}
-          // FlatList가 함수를 호출할 떄 제공되는 값 렌더링 되는목록마다 이 함수 호출
-          keyExtractor={(item, index) => {
-            // 모든 항목에서 키를 가져오라고 호출하는 함수.
-            return item.id;
-          }}
-          alwaysBounceVertical={false}
+    <>
+      <StatusBar style='light' />
+      <View style={styles.appContainer}>
+        <Button
+          title='Add New Goal'
+          color='#a065ec'
+          onPress={startAddGoalHandler}
         />
+        <GoalInput
+          visible={modalIsVisible}
+          onAddGoal={addGoalHandler}
+          onCancel={endAddGoalHandler}
+        />
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={courseGoals}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  id={itemData.item.id}
+                  text={itemData.item.text}
+                  onDeleteItem={deleteGoalHandler}
+                />
+              );
+            }}
+            // FlatList가 함수를 호출할 떄 제공되는 값 렌더링 되는목록마다 이 함수 호출
+            keyExtractor={(item, index) => {
+              // 모든 항목에서 키를 가져오라고 호출하는 함수.
+              return item.id;
+            }}
+            alwaysBounceVertical={false}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -73,6 +78,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     // 전체 높이를 지정해줘야, 자식이 flex를 사용할 수 있음
     flex: 1,
+    backgroundColor: '#1e085a',
   },
   goalsContainer: {
     flex: 5,

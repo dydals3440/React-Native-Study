@@ -41,10 +41,10 @@ const GoalInput = (props) => {
         {/* 함수가 값인 프로퍼티로 부모 컴포넌트로부터 받을 수 있다. 누를떄마다 실행됨. */}
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title='Add Goal' onPress={addGoalHandler} />
+            <Button title='Cancel' onPress={props.onCancel} color='#f31282' />
           </View>
           <View style={styles.button}>
-            <Button title='Cancel' onPress={props.onCancel} />
+            <Button title='Add Goal' onPress={addGoalHandler} color='#b180f0' />
           </View>
         </View>
       </View>
@@ -67,9 +67,12 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1,
-    borderColor: '#cccccc',
+    borderColor: '#e4d0ff',
+    backgroundColor: '#e4d0ff',
+    color: '#120438',
+    borderRadius: 6,
     width: '100%',
-    padding: 8,
+    padding: 16,
   },
   image: {
     width: 100,
