@@ -28,7 +28,14 @@ const GoalInput = (props) => {
           value={text}
         />
         {/* 함수가 값인 프로퍼티로 부모 컴포넌트로부터 받을 수 있다. 누를떄마다 실행됨. */}
-        <Button title='Add Goal' onPress={addGoalHandler} />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button title='Add Goal' onPress={addGoalHandler} />
+          </View>
+          <View style={styles.button}>
+            <Button title='Cancel' />
+          </View>
+        </View>
       </View>
     </Modal>
   );
@@ -39,18 +46,26 @@ export default GoalInput;
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
-    flexDirection: 'row', // default : fleDirection: column
-    justifyContent: 'space-between',
+    flexDirection: 'column', // default : fleDirection: column
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
+    padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#cccccc',
   },
   textInput: {
     borderWidth: 1,
     borderColor: '#cccccc',
-    width: '70%',
-    marginRight: 8,
+    width: '100%',
     padding: 8,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 16,
+  },
+  button: {
+    width: 100,
+    marginHorizontal: 8,
   },
 });
