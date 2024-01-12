@@ -13,8 +13,10 @@ export default function App() {
     ]);
   };
 
-  const deleteGoalHandler = () => {
-    return console.log('delete');
+  const deleteGoalHandler = (id) => {
+    setCourseGoals((prev) => {
+      return prev.filter((item) => item.id !== id);
+    });
   };
   return (
     <View style={styles.appContainer}>
@@ -25,6 +27,7 @@ export default function App() {
           renderItem={(itemData) => {
             return (
               <GoalItem
+                id={itemData.item.id}
                 text={itemData.item.text}
                 onDeleteItem={deleteGoalHandler}
               />
