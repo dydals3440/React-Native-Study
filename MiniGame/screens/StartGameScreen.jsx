@@ -12,6 +12,7 @@ const StartGameScreen = () => {
         keyboardType='number-pad'
         // 숫자를 다룰때는 중요하지 않지만, 일반 텍스트가 포함되어있으면 자동으로 대문자가 입력되게!
         autoCapitalize='none'
+        // 자동 수정을 켜고 끌 수 있는 auto Correct 프로퍼티도 있음
         autoCorrect={false}
       />
       <PrimaryButton>Reset</PrimaryButton>
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: '#72063c',
+    backgroundColor: '#430825',
     borderRadius: 8,
     // android shadow
     elevation: 4,
