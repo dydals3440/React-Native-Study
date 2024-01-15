@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: '#430825',
+    backgroundColor: '#3b021f',
     borderRadius: 8,
     // android shadow
     elevation: 4,
