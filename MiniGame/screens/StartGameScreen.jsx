@@ -2,7 +2,7 @@ import { TextInput, View, StyleSheet, Alert } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import { useState } from 'react';
 
-const StartGameScreen = () => {
+const StartGameScreen = ({ onPickNumber }) => {
   // 0 같은 숫자가 아닌, 빈 문자열인 이유는 enteredNumber을 TextInput 컴포넌트에 묶으면 결과값은 항상 문자열이다! 그래서 ('')로 설정한것이 이유다.
   const [enteredNumber, setEnteredNumber] = useState('');
 
@@ -26,8 +26,8 @@ const StartGameScreen = () => {
       );
       return; // 함수의 실행을 멈춤.
     }
-
-    console.log('Valid Number');
+    // enteredNumber가 아닌, 유효성 검사를 통과한 chosenNumber를 통과시켜주어야한다. (onPickNumber은, APP.js에서 받음!)
+    onPickNumber(chosenNumber);
   };
 
   return (
