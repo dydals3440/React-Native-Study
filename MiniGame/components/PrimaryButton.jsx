@@ -2,10 +2,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 
 // Touchable vs Pressable
 
-const PrimaryButton = ({ children }) => {
-  const pressHandler = () => {
-    console.log('버튼 눌림!');
-  };
+const PrimaryButton = ({ children, onPress }) => {
   return (
     // Pressable을 View로 감싸주는 구조 변경, ripple 효과 위해
     <View style={styles.buttonOuterContainer}>
@@ -15,7 +12,7 @@ const PrimaryButton = ({ children }) => {
             ? [styles.buttonInnerContainer, styles.pressed]
             : styles.buttonInnerContainer
         }
-        onPress={pressHandler}
+        onPress={onPress}
         android_ripple={{ color: '#640233' }}
       >
         <Text style={styles.buttonText}>{children}</Text>
