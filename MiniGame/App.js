@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);
@@ -27,7 +28,10 @@ export default function App() {
 
   return (
     // View는 콘텐츠가 들어가는 높이만 차지
-    <LinearGradient colors={['#ddb52f', '#4e0329']} style={styles.rootScreen}>
+    <LinearGradient
+      colors={[Colors.primary700, Colors.accent500]}
+      style={styles.rootScreen}
+    >
       <ImageBackground
         source={require('./assets/images/background.png')}
         resizeMode='cover'

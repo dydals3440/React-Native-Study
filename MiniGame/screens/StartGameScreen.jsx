@@ -1,6 +1,7 @@
 import { TextInput, View, StyleSheet, Alert } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
 import { useState } from 'react';
+import Colors from '../constants/colors';
 
 const StartGameScreen = ({ onPickNumber }) => {
   // 0 같은 숫자가 아닌, 빈 문자열인 이유는 enteredNumber을 TextInput 컴포넌트에 묶으면 결과값은 항상 문자열이다! 그래서 ('')로 설정한것이 이유다.
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: '#3b021f',
+    backgroundColor: Colors.primary800,
     borderRadius: 8,
     // android shadow
     elevation: 4,
@@ -80,9 +81,9 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     fontSize: 32,
-    borderBottomColor: '#ddb52f',
+    borderBottomColor: Colors.accent500,
     borderBottomWidth: 2,
-    color: '#ddb52f',
+    color: Colors.accent500,
     marginVertical: 8,
     fontWeight: 'bold',
     textAlign: 'center',
