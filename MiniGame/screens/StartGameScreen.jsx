@@ -1,7 +1,10 @@
-import { TextInput, View, StyleSheet, Alert } from 'react-native';
+import { TextInput, View, StyleSheet, Alert, Text } from 'react-native';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import { useState } from 'react';
 import Colors from '../constants/colors';
+import Title from '../components/ui/Title';
+import Card from '../components/ui/Card';
+import InstructionText from '../components/ui/InstructionText';
 
 const StartGameScreen = ({ onPickNumber }) => {
   // 0 같은 숫자가 아닌, 빈 문자열인 이유는 enteredNumber을 TextInput 컴포넌트에 묶으면 결과값은 항상 문자열이다! 그래서 ('')로 설정한것이 이유다.
@@ -32,28 +35,32 @@ const StartGameScreen = ({ onPickNumber }) => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      {/* 객체 안에, number로 주어야 한다. */}
-      {/* 일반 텍스트 키보드가 나오는데, 숫자키보드가 나오게 해줄것이다 */}
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType='number-pad'
-        // 숫자를 다룰때는 중요하지 않지만, 일반 텍스트가 포함되어있으면 자동으로 대문자가 입력되게!
-        autoCapitalize='none'
-        // 자동 수정을 켜고 끌 수 있는 auto Correct 프로퍼티도 있음
-        autoCorrect={false}
-        value={enteredNumber}
-        onChangeText={numberInputHandler}
-      />
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number!</Title>
+      <Card>
+        <InstructionText>Enter a Number!</InstructionText>
+        {/* 객체 안에, number로 주어야 한다. */}
+        {/* 일반 텍스트 키보드가 나오는데, 숫자키보드가 나오게 해줄것이다 */}
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType='number-pad'
+          // 숫자를 다룰때는 중요하지 않지만, 일반 텍스트가 포함되어있으면 자동으로 대문자가 입력되게!
+          autoCapitalize='none'
+          // 자동 수정을 켜고 끌 수 있는 auto Correct 프로퍼티도 있음
+          autoCorrect={false}
+          value={enteredNumber}
+          onChangeText={numberInputHandler}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-        </View>
-      </View>
+      </Card>
     </View>
   );
 };
@@ -61,21 +68,11 @@ const StartGameScreen = ({ onPickNumber }) => {
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  rootContainer: {
+    flex: 1,
     marginTop: 100,
-    marginHorizontal: 24,
-    padding: 16,
-    backgroundColor: Colors.primary800,
-    borderRadius: 8,
-    // android shadow
-    elevation: 4,
-    // IOS Shadow
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.25,
+    // react-native에서 기본이 stretch 그래서, 늘어서 표현됨. center로 바꾸면 자기 크기만큼으로 변경!
+    alignItems: 'center',
   },
   numberInput: {
     height: 50,

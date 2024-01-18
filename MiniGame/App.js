@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Colors from './constants/colors';
 import GameOverScreen from './screens/GameOverScreen';
 
 export default function App() {
