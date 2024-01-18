@@ -12,18 +12,33 @@ import { LinearGradient } from 'expo-linear-gradient';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import GameOverScreen from './screens/GameOverScreen';
 
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);
+  const [gameIsOver, setGameIsOver] = useState(true);
 
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
+    // 게임이 시작되면
+    setGameIsOver(false);
   }
 
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
+  function gameOverHandler() {
+    setGameIsOver(true);
+  }
+
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} />;
+    screen = (
+      <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+    );
+  }
+
+  // 게임이 시작하지않았는데 false나오면안됨
+  if (gameIsOver && userNumber) {
+    screen = <GameOverScreen />;
   }
 
   return (
