@@ -3,7 +3,7 @@ import Title from '../components/ui/Title';
 import Colors from '../constants/colors';
 import PrimaryButton from '../components/ui/PrimaryButton';
 
-const GameOverScreen = () => {
+const GameOverScreen = ([roundsNumber, userNumber, onStartNewGame]) => {
   return (
     <View style={styles.rootContainer}>
       <Title>GAME OVER!</Title>
@@ -15,10 +15,11 @@ const GameOverScreen = () => {
       </View>
       {/* Text 컴포넌트로, View 컴포넌트는 감쌀 수 없음. 하지만, Text 컴포넌트를 감쌀 수 있다. */}
       <Text style={styles.summaryText}>
-        Your Phone Needed <Text style={styles.highlight}>X</Text> rounds to
-        guess the number <Text style={styles.highlight}>Y</Text>.
+        Your Phone Needed <Text style={styles.highlight}>{roundsNumber}</Text>
+        rounds to guess the number
+        <Text style={styles.highlight}>{userNumber}</Text>.
       </Text>
-      <PrimaryButton>Start New Game</PrimaryButton>
+      <PrimaryButton onPress={onStartNewGame}>Start New Game</PrimaryButton>
     </View>
   );
 };

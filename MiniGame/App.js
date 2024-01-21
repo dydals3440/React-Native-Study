@@ -19,6 +19,7 @@ import GameOverScreen from './screens/GameOverScreen';
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);
   const [gameIsOver, setGameIsOver] = useState(true);
+  const [guessRounds, setGuessRounds] = useState(0);
 
   const [fontsLoaded] = useFonts({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -41,6 +42,12 @@ export default function App() {
     setGameIsOver(true);
   }
 
+  function startNewGameHandler() {
+    // 자동으로 게임이 초기화됨 UserNumber이 0가 되면
+    setUserNumber(null);
+    setGuessRounds(0);
+  }
+
   if (userNumber) {
     screen = (
       <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
@@ -49,7 +56,13 @@ export default function App() {
 
   // 게임이 시작하지않았는데 false나오면안됨
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        userNumber={userNumber}
+        roundsNumber={guessRounds}
+        onStartNewGame={startNewGameHandler}
+      />
+    );
   }
 
   return (

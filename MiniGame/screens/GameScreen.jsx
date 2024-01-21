@@ -36,6 +36,11 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     }
   }, [currentGuess, userNumber, onGameOver]);
 
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
+
   const nextGuessHandler = (direction) => {
     // 같은 수일떄 에러 발생
     if (
