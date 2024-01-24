@@ -96,8 +96,9 @@ const GameScreen = ({ userNumber, onGameOver }) => {
         ))} */}
         <FlatList
           data={guessRounds}
-          renderItem={({ guessRound }) => <Text>{guessRound}</Text>}
-          keyExtractor={(guessRound) => guessRound}
+          renderItem={(itemData) => <Text>{itemData.item}</Text>}
+          // 여기서는 item 자체가 고유 키가 될 수 있음. 모든, 아이템들이 유니크하기 떄문.
+          keyExtractor={(item) => item}
         />
       </View>
     </View>
