@@ -9,7 +9,7 @@ export const GoalItem = (props) => {
         onPress={props.onDeleteItem.bind(this, props.id)}
         style={({ pressed }) => pressed && styles.pressedItem}
       >
-        <Text style={styles.goalText}>r{props.text}</Text>
+        <Text style={styles.goalText}>{props.text}</Text>
       </Pressable>
     </View>
   );
