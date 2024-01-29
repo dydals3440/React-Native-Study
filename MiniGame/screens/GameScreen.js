@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Alert, FlatList } from 'react-native';
+import { View, StyleSheet, Alert, Text, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import Title from '../components/ui/Title';
 import NumberContainer from '../components/game/NumberContainer';
-import PrimaryButton from '../components/ui/PrimaryButton';
 import Card from '../components/ui/Card';
 import InstructionText from '../components/ui/InstructionText';
+import PrimaryButton from '../components/ui/PrimaryButton';
+import Title from '../components/ui/Title';
+import GuessLogItem from '../components/game/GuessLogItem';
 
-// 최신 스마트폰에는 노치가 있습니다 .콘텐츠가 노치에 너무 가깝거나, 가려지지 않도록 거리를 두어야 한다. 노치가 없는 스마트폰도 있고, 스마트폰의 크기도 제각각이다. 실행중인 장치를 자동으로 감지하고, 노치와 상태 표시줄과 콘텐츠 사이에 적절한 간격을 자동으로 추가하는 컴포넌트가 SafeAreaView이다.
-
-// randomNumber
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
 
@@ -21,18 +19,17 @@ function generateRandomBetween(min, max, exclude) {
   }
 }
 
-// 변수를 바깥에 선언하면, 컴포넌트가 재평가할떄 변수가 달라지지 않는다.
 let minBoundary = 1;
 let maxBoundary = 100;
 
-const GameScreen = ({ userNumber, onGameOver }) => {
+function GameScreen({ userNumber, onGameOver }) {
   const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([initialGuess]);
 
   useEffect(() => {
     if (currentGuess === userNumber) {
-      onGameOver();
+      onGameOver(guessRounds.length);
     }
   }, [currentGuess, userNumber, onGameOver]);
 
@@ -41,13 +38,13 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     maxBoundary = 100;
   }, []);
 
-  const nextGuessHandler = (direction) => {
-    // 같은 수일떄 에러 발생
+  function nextGuessHandler(direction) {
+    // direction => 'lower', 'greater'
     if (
       (direction === 'lower' && currentGuess < userNumber) ||
       (direction === 'greater' && currentGuess > userNumber)
     ) {
-      Alert.alert("Don't lie", 'You know that this is wrong...', [
+      Alert.alert("Don't lie!", 'You know that this is wrong...', [
         { text: 'Sorry!', style: 'cancel' },
       ]);
       return;
@@ -66,51 +63,54 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     );
     setCurrentGuess(newRndNumber);
     setGuessRounds((prevGuessRounds) => [newRndNumber, ...prevGuessRounds]);
-  };
+  }
+
+  const guessRoundsListLength = guessRounds.length;
 
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
-        {/* style prop을 전달해서, 컴포넌트에 전달 후, 스타일과 기존 스타일을 병합하여 사용할 수 있음! */}
         <InstructionText style={styles.instructionText}>
           Higher or lower?
         </InstructionText>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
-              <Ionicons name='md-remove' size={24} color='white' />
+              <Ionicons name="md-remove" size={24} color="white" />
             </PrimaryButton>
           </View>
           <View style={styles.buttonContainer}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, 'greater')}>
-              <Ionicons name='md-add' size={24} color='white' />
+              <Ionicons name="md-add" size={24} color="white" />
             </PrimaryButton>
           </View>
         </View>
       </Card>
-      <View>
-        {/* {guessRounds.map((guessRound) => (
-          <Text key={guessRound}>{guessRound}</Text>
-        ))} */}
+      <View style={styles.listContainer}>
+        {/* {guessRounds.map(guessRound => <Text key={guessRound}>{guessRound}</Text>)} */}
         <FlatList
           data={guessRounds}
-          renderItem={(itemData) => <Text>{itemData.item}</Text>}
-          // 여기서는 item 자체가 고유 키가 될 수 있음. 모든, 아이템들이 유니크하기 떄문.
+          renderItem={(itemData) => (
+            <GuessLogItem
+              roundNumber={guessRoundsListLength - itemData.index}
+              guess={itemData.item}
+            />
+          )}
           keyExtractor={(item) => item}
         />
       </View>
     </View>
   );
-};
+}
 
 export default GameScreen;
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 12,
+    padding: 24,
   },
   instructionText: {
     marginBottom: 12,
@@ -120,5 +120,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+  },
+  listContainer: {
+    flex: 1,
+    padding: 16,
   },
 });

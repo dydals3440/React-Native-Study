@@ -1,9 +1,10 @@
 import { View, StyleSheet } from 'react-native';
+
 import Colors from '../../constants/colors';
 
-const Card = ({ children }) => {
+function Card({ children }) {
   return <View style={styles.card}>{children}</View>;
-};
+}
 
 export default Card;
 
@@ -16,9 +17,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.primary800,
     borderRadius: 8,
-    // android shadow
     elevation: 4,
-    // IOS Shadow
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
