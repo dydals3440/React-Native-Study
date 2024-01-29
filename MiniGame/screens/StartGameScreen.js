@@ -6,6 +6,9 @@ import {
   Alert,
   Dimensions,
   useWindowDimensions,
+  // 다른 콘텐츠 또는 입력란을 포함하는 다른 콘텐츠를 감싸는 데 사용할 수 있는 컴포넌트, 키보드가 열릴 때마다 입력 요소 및 다른 요소가 화면 위로 올라가, 키보드가 열려도 엑세스 가능!
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 
 import PrimaryButton from '../components/ui/PrimaryButton';
@@ -46,30 +49,37 @@ function StartGameScreen({ onPickNumber }) {
   }
 
   return (
-    // 이 컴포넌트 함수는 치수가 변경될떄마다 재실행됨 (그래서 Dimensions가 아닌 useWindowDimensions 훅을 사용하는 것)
-    <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
-      <Title>Guess My Number</Title>
-      <Card>
-        <InstructionText>Enter a Number</InstructionText>
-        <TextInput
-          style={styles.numberInput}
-          maxLength={2}
-          keyboardType='number-pad'
-          autoCapitalize='none'
-          autoCorrect={false}
-          onChangeText={numberInputHandler}
-          value={enteredNumber}
-        />
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
-          </View>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-          </View>
+    <ScrollView styles={styles.screen}>
+      <KeyboardAvoidingView style={styles.screen} behavior='position'>
+        {/* // 이 컴포넌트 함수는 치수가 변경될떄마다 재실행됨 (그래서 Dimensions가
+      아닌 useWindowDimensions 훅을 사용하는 것) */}
+        <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
+          <Title>Guess My Number</Title>
+          <Card>
+            <InstructionText>Enter a Number</InstructionText>
+            <TextInput
+              style={styles.numberInput}
+              maxLength={2}
+              keyboardType='number-pad'
+              autoCapitalize='none'
+              autoCorrect={false}
+              onChangeText={numberInputHandler}
+              value={enteredNumber}
+            />
+            <View style={styles.buttonsContainer}>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+              </View>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={confirmInputHandler}>
+                  Confirm
+                </PrimaryButton>
+              </View>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
@@ -78,6 +88,9 @@ export default StartGameScreen;
 // const deviceHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   rootContainer: {
     flex: 1,
     // marginTop: deviceHeight < 450 ? 30 : 100,
