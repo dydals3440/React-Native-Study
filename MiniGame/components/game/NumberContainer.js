@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-
+// Dimension API를 사용해 현재 크기의 스냅샷을 구할 수는 있으나 - 코드를 자동으로 업데이트하는 실시간 구독 기능은 존재하지 않습니다.
 import Colors from '../../constants/colors';
 
 function NumberContainer({ children }) {
