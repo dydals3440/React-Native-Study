@@ -2,13 +2,23 @@ import CategoryGridTile from '../components/CategoryGridTile';
 import { CATEGORIES } from '../data/dummy-data';
 import { FlatList } from 'react-native';
 
-const renderCategoryItem = (itemData) => {
-  return (
-    <CategoryGridTile title={itemData.item.title} color={itemData.item.color} />
-  );
-};
-
-const CategoriesScreen = () => {
+// react-navigation이 제공하는 navigation prop을 받을 수 있다.
+const CategoriesScreen = ({ navigation }) => {
+  const renderCategoryItem = (itemData) => {
+    const pressHandler = () => {
+      // App.js에서 네비게이션을 설정한 이름을 바탕으로 이동한다.
+      navigation.navigate('MealsOverview');
+    };
+    return (
+      <CategoryGridTile
+        title={itemData.item.title}
+        color={itemData.item.color}
+        onPress={pressHandler}
+      />
+    );
+  };
+  // 여기서 전달받은 navigation을 위의 함수에 전달하고 싶으면 renderCategoryItem.bind()를해도됨
+  // 아니면 renderCategoryItem을 함수 내부로 옮김
   return (
     <FlatList
       data={CATEGORIES}
