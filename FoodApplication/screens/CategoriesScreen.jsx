@@ -7,7 +7,10 @@ const CategoriesScreen = ({ navigation }) => {
   const renderCategoryItem = (itemData) => {
     const pressHandler = () => {
       // App.js에서 네비게이션을 설정한 이름을 바탕으로 이동한다.
-      navigation.navigate('MealsOverview');
+      navigation.navigate('MealsOverview', {
+        // 각각 이동할, 키랑, 아이디값 정의
+        categoryId: itemData.item.id,
+      });
     };
     return (
       <CategoryGridTile

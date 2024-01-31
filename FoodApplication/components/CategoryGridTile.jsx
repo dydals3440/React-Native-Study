@@ -1,6 +1,9 @@
 import { Pressable, StyleSheet, Text, View, Platform } from 'react-native';
+// import { useNavigation } from '@react-navigation/native';
 
 const CategoryGridTile = ({ title, color, onPress }) => {
+  // 스크린으로 등록되지 않은 (네비게이션 프롭을 전달못하는) 컴포넌트 내에서 네비게이션을 해야할 경우가 있을떄 대안으로 useNavigation 훅을 사용할 수 있다.
+  // const navigation = useNavigation();
   return (
     <View style={[styles.gridItem]}>
       <Pressable
