@@ -49,6 +49,7 @@ function StartGameScreen({ onPickNumber }) {
   }
 
   return (
+    // ScrollView로 감싸주는이유, 그냥 KeyboardAvoidingView만 이용하면, 아예 인풋창이 위로 올라가버리는데, 계속해서 flatList로 아이템이 추가된다고 생각해서, 너무 위로 올라가버린다. 스크롤뷰로 바꿔주면 스크롤이 가능하다고 인식하니 해당 부분 UI를 유지시킨다.
     <ScrollView styles={styles.screen}>
       <KeyboardAvoidingView style={styles.screen} behavior='position'>
         {/* // 이 컴포넌트 함수는 치수가 변경될떄마다 재실행됨 (그래서 Dimensions가
