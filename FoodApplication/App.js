@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <>
-      <StatusBar style='dark' />
+      <StatusBar style='light' />
       <NavigationContainer>
         {/* 멋진 헤더 추가, 충돌하지 않도록 안전영역도 추가 */}
         {/* Stack.Navigator에는 initialRouteName으로, 먼저 보여주고 싶은 페이지의 이름을 연결할 수 있다. */}
@@ -32,7 +32,13 @@ export default function App() {
           <Stack.Screen
             name='MealsOverview'
             component={MealsOverviewScreen}
-            options={{}}
+            // Dynamic하게 헤더 변경 방법1.
+            // options={({ route, navigation }) => {
+            //   const catId = route.params.categoryId;
+            //   return {
+            //     title: catId,
+            //   };
+            // }}
           />
         </Stack.Navigator>
       </NavigationContainer>
