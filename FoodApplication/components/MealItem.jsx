@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Pressable,
@@ -7,12 +8,29 @@ import {
   Platform,
 } from 'react-native';
 
-const MealItem = ({ title, imageUrl, duration, complexity, affordability }) => {
+const MealItem = ({
+  id,
+  title,
+  imageUrl,
+  duration,
+  complexity,
+  affordability,
+}) => {
+  // 여기는 Screen 컴포넌트가 아니기 떄문에, navigation이나, route 프랍을 받지 않는다.
+  const navigation = useNavigation();
+  // Stack.Screen의 name이 식별자임.
+  // 화면에 파라미터를 전달. 식단의 아이디
+  const selectMealItemHandler = () => {
+    navigation.navigate('MealDetail', {
+      mealId: id,
+    });
+  };
   return (
     <View style={styles.mealItem}>
       <Pressable
         android_ripple={{ color: '#ccc' }}
         style={({ pressed }) => (pressed ? styles.buttonPressed : null)}
+        onPress={selectMealItemHandler}
       >
         <View styles={styles.innerContainer}>
           <View>
