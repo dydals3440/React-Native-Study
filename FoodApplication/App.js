@@ -6,6 +6,7 @@ import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavoriteScreen from './screens/FavoriteScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -18,6 +19,10 @@ const DrawerNavigator = () => {
         headerTintColor: 'white',
         // 전체적인 색상.
         sceneContainerStyle: { backgroundColor: '#3f2f25' },
+        drawerContentStyle: { backgroundColor: '#3f2f25' },
+        drawerInactiveTintColor: 'white',
+        drawerActiveTintColor: '#351401',
+        drawerActiveBackgroundColor: '#e4baa1',
       }}
     >
       <Drawer.Screen
@@ -25,9 +30,21 @@ const DrawerNavigator = () => {
         component={CategoriesScreen}
         options={{
           title: 'All Categories',
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name='list' color={color} size={size} />
+          ),
         }}
       />
-      <Drawer.Screen name='Favorites' component={FavoriteScreen} />
+      <Drawer.Screen
+        name='Favorites'
+        component={FavoriteScreen}
+        options={{
+          title: 'All Categories',
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name='star' color={color} size={size} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
