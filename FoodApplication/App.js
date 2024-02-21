@@ -4,8 +4,33 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MealsOverviewScreen from './screens/MealsOverviewScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import FavoriteScreen from './screens/FavoriteScreen';
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#351401' },
+        headerTintColor: 'white',
+        // 전체적인 색상.
+        sceneContainerStyle: { backgroundColor: '#3f2f25' },
+      }}
+    >
+      <Drawer.Screen
+        name='Categories'
+        component={CategoriesScreen}
+        options={{
+          title: 'All Categories',
+        }}
+      />
+      <Drawer.Screen name='Favorites' component={FavoriteScreen} />
+    </Drawer.Navigator>
+  );
+};
 
 export default function App() {
   return (
@@ -15,41 +40,22 @@ export default function App() {
         {/* 멋진 헤더 추가, 충돌하지 않도록 안전영역도 추가 */}
         {/* Stack.Navigator에는 initialRouteName으로, 먼저 보여주고 싶은 페이지의 이름을 연결할 수 있다. */}
         {/* 공통속성은 Navigator에 */}
-        <Stack.Navigator
-          initialRouteName='MealsCategories'
-          screenOptions={{
-            headerStyle: { backgroundColor: '#351401' },
-            headerTintColor: 'white',
-            contentStyle: { backgroundColor: '#3f2f25' },
-          }}
-        >
+        <Stack.Navigator initialRouteName='MealsCategories'>
           <Stack.Screen
-            name='MealsCategories'
-            component={CategoriesScreen}
+            name='Drawer'
+            component={DrawerNavigator}
             options={{
               title: 'All Categories',
+              headerShown: false,
             }}
           />
-          <Stack.Screen
-            name='MealsOverview'
-            component={MealsOverviewScreen}
-            // Dynamic하게 헤더 변경 방법1.
-            // options={({ route, navigation }) => {
-            //   const catId = route.params.categoryId;
-            //   return {
-            //     title: catId,
-            //   };
-            // }}
-          />
+          <Stack.Screen name='MealsOverview' component={MealsOverviewScreen} />
           <Stack.Screen
             name='MealDetail'
             component={MealDetailScreen}
-            // options={{
-            //   // headerRight의 결과값은 컴포넌트 함수
-            //   headerRight: () => {
-            //     return <Button title='Tap me!' />;
-            //   },
-            // }}
+            options={{
+              title: 'About the Meal',
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
