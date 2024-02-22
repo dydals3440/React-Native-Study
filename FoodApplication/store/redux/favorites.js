@@ -11,7 +11,7 @@ const favoritesSlice = createSlice({
       // RT는 내부적으로 상태가 알아서 처리되므로, 상태를 변경하는 것이 가능.
       state.ids.push(action.payload.id);
     },
-    removeFavorite: (state) => {
+    removeFavorite: (state, action) => {
       // 제거 할 아이템의 인덱스를 가져옴
       state.ids.splice(state.ids.indexOf(action.payload.id), 1);
     },
