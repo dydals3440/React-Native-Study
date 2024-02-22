@@ -13,19 +13,25 @@ import List from '../components/MealDetail/List';
 import { useContext, useLayoutEffect } from 'react';
 import IconButton from '../components/IconButton';
 import { FavoritesContext } from '../store/context/favorites-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite, removeFavorite } from '../store/redux/favorites';
 
 const MealDetailScreen = ({ route, navigation }) => {
-  const favoriteMealCtx = useContext(FavoritesContext);
+  // const favoriteMealCtx = useContext(FavoritesContext);
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+  const dispatch = useDispatch();
+
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
   // mealId가 true / false 인지 includes가 판별
-  const mealIsFavorite = favoriteMealCtx.ids.includes(mealId);
+  // const mealIsFavorite = favoriteMealCtx.ids.includes(mealId);
+  const mealIsFavorite = favoriteMealIds.includes(mealId);
 
   const headerButtonPressHandler = () => {
     return mealIsFavorite
-      ? favoriteMealCtx.removeFavorite(mealId)
-      : favoriteMealCtx.addFavorite(mealId);
+      ? dispatch(removeFavorite({ id: mealId }))
+      : dispatch(addFavorite({ id: mealId }));
   };
 
   useLayoutEffect(() => {
