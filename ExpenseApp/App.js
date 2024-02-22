@@ -8,6 +8,7 @@ import ManageExpense from './screens/ManageExpense';
 import RecentExpenses from './screens/RecentExpenses';
 import AllExpenses from './screens/AllExpenses';
 import { GlobalStyles } from './constants/styles';
+import IconButton from './components/UI/IconButton';
 
 // Stack + 하단탭
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,15 @@ const ExpensesOverview = () => {
         headerTintColor: 'white',
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerRight: ({ tintColor }) => (
+          // tintColor을 프랍으로 갖을 수 있음. 위의 정의한 색상
+          <IconButton
+            icon='add'
+            size={24}
+            color={tintColor}
+            onPress={() => {}}
+          />
+        ),
       }}
     >
       <BottomTab.Screen
