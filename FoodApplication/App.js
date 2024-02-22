@@ -7,7 +7,9 @@ import MealDetailScreen from './screens/MealDetailScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavoriteScreen from './screens/FavoriteScreen';
 import { Ionicons } from '@expo/vector-icons';
-import FavoritesContextProvider from './store/favorites-context';
+import FavoritesContextProvider from './store/context/favorites-context';
+import { Provider } from 'react-redux';
+import { store } from './store/redux/store';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -52,7 +54,8 @@ export default function App() {
   return (
     <>
       <StatusBar style='light' />
-      <FavoritesContextProvider>
+      <Provider store={store}>
+        {/* <FavoritesContextProvider> */}
         <NavigationContainer>
           {/* 멋진 헤더 추가, 충돌하지 않도록 안전영역도 추가 */}
           {/* Stack.Navigator에는 initialRouteName으로, 먼저 보여주고 싶은 페이지의 이름을 연결할 수 있다. */}
@@ -86,7 +89,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavoritesContextProvider>
+        {/* </FavoritesContextProvider> */}
+      </Provider>
     </>
   );
 }

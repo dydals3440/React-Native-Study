@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { FavoritesContext } from '../store/favorites-context';
+import { FavoritesContext } from '../store/context/favorites-context';
 import MealsList from '../components/MealsList/MealsList';
 import { MEALS } from '../data/dummy-data';
 
