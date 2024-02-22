@@ -71,14 +71,27 @@ export default function App() {
       <StatusBar style='auto' />
       <NavigationContainer>
         {/* Stack Navigator을 메인으로 */}
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+            headerTintColor: 'white',
+          }}
+        >
           {/* InitialRouteName을 지정해주지않으면, 아래께 먼저나옴 */}
           <Stack.Screen
             name='ExpensesOverview'
             component={ExpensesOverview}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name='ManageExpense' component={ManageExpense} />
+          <Stack.Screen
+            name='ManageExpense'
+            component={ManageExpense}
+            options={{
+              // Presentation은 화면 로딩 방법을 제어하는 옵션,  modal 설정시 iOS에서 다르게 구현
+              presentation: 'modal',
+              title: 'Manage Expense',
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
