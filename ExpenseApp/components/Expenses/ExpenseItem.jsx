@@ -1,9 +1,15 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import { GlobalStyles } from '../../constants/styles';
 import { getFormattedDate } from '../../utils/date';
 
 const ExpenseItem = ({ description, amount, date }) => {
-  const expensePressHandler = () => {};
+  const navigation = useNavigation();
+  const expensePressHandler = () => {
+    // App.js의 Navigator의 name
+    navigation.navigate('ManageExpense');
+  };
 
   return (
     <Pressable

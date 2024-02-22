@@ -18,7 +18,8 @@ const BottomTab = createBottomTabNavigator();
 const ExpensesOverview = () => {
   return (
     <BottomTab.Navigator
-      screenOptions={{
+      // 화살표 함수로, 감싸면서 navigation을 줄 수 있음.
+      screenOptions={({ navigation }) => ({
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: 'white',
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
@@ -29,10 +30,12 @@ const ExpensesOverview = () => {
             icon='add'
             size={24}
             color={tintColor}
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('ManageExpense');
+            }}
           />
         ),
-      }}
+      })}
     >
       <BottomTab.Screen
         name='RecentExpenses'
