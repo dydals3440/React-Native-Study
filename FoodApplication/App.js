@@ -30,7 +30,6 @@ const DrawerNavigator = () => {
         name='Categories'
         component={CategoriesScreen}
         options={{
-          title: 'All Categories',
           drawerIcon: ({ color, size }) => (
             <Ionicons name='list' color={color} size={size} />
           ),
@@ -40,7 +39,6 @@ const DrawerNavigator = () => {
         name='Favorites'
         component={FavoriteScreen}
         options={{
-          title: 'All Categories',
           drawerIcon: ({ color, size }) => (
             <Ionicons name='star' color={color} size={size} />
           ),
@@ -59,7 +57,14 @@ export default function App() {
           {/* 멋진 헤더 추가, 충돌하지 않도록 안전영역도 추가 */}
           {/* Stack.Navigator에는 initialRouteName으로, 먼저 보여주고 싶은 페이지의 이름을 연결할 수 있다. */}
           {/* 공통속성은 Navigator에 */}
-          <Stack.Navigator initialRouteName='MealsCategories'>
+          <Stack.Navigator
+            initialRouteName='MealsCategories'
+            screenOptions={{
+              headerStyle: { backgroundColor: '#351401' },
+              headerTintColor: 'white',
+              contentStyle: { backgroundColor: '#3f2f25' },
+            }}
+          >
             <Stack.Screen
               name='Drawer'
               component={DrawerNavigator}

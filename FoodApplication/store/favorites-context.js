@@ -8,7 +8,7 @@ export const FavoritesContext = createContext({
 });
 
 const FavoritesContextProvider = ({ children }) => {
-  const [favoriteMealIds, setFavoriteMealIds] = useState();
+  const [favoriteMealIds, setFavoriteMealIds] = useState([]);
   const addFavorite = (id) => {
     // 상태 업데이트함수로 어떤 함수를 전달하면, 그 함수가 이전 상태 스냅샷을 수신
     setFavoriteMealIds((currentFavIds) => [...currentFavIds, id]);
