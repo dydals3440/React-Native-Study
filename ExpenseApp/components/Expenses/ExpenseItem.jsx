@@ -7,7 +7,7 @@ import { getFormattedDate } from '../../utils/date';
 const ExpenseItem = ({ id, description, amount, date }) => {
   const navigation = useNavigation();
   const expensePressHandler = () => {
-    // App.js의 Navigator의 name
+    // App.js의 Navigator의 name, 두번쨰 인자는 id (파람)
     navigation.navigate('ManageExpense', {
       expenseId: id,
     });

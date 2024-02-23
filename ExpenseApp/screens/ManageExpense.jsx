@@ -1,10 +1,13 @@
-import { useLayoutEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useContext, useLayoutEffect } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import IconButton from '../components/UI/IconButton';
 import { GlobalStyles } from '../constants/styles';
 import Button from '../components/UI/Button';
+import { ExpensesContext } from '../\bstore/expenses-context';
 
 const ManageExpense = ({ route, navigation }) => {
+  const expensesCtx = useContext(ExpensesContext);
+
   const editedExpenseId = route.params?.expenseId;
   // undefined면 id를 받지 못하므로 추가모드, undefined가 아니면 수정 모드.
   // !!를 붙여서, 값을 불리언으로 전환!
@@ -19,6 +22,7 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   const deleteExpenseHandler = () => {
+    expensesCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   };
 
@@ -27,11 +31,24 @@ const ManageExpense = ({ route, navigation }) => {
   };
 
   const confirmHandler = () => {
+    isEditing
+      ? expensesCtx.updateExpense(editedExpenseId, {
+          description: 'Test3!!!',
+          amount: 32.88,
+          date: new Date('2024-02-15'),
+        })
+      : expensesCtx.addExpense({
+          description: 'Test!!!',
+          amount: 29.99,
+          date: new Date('2024-02-18'),
+        });
+    // 항상 이후에 모달을 닫음
     navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
+      <TextInput />
       <View style={styles.buttons}>
         <Button style={styles.button} mode='flat' onPress={cancelHandler}>
           Cancel
