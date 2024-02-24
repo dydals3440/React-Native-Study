@@ -16,6 +16,12 @@ const ManageExpense = ({ route, navigation }) => {
   // console.log(!!isEditing);
   // setOptions를 컴포넌트에 바로 호출 X, useEffect로 감싸거나, 처음에 깜빡거리는걸 막기위해, useLayOutEffect 훅으로 감싸야 한다.
 
+  const selectedExpense = expensesCtx.expenses.find(
+    (expense) => expense.id === editedExpenseId
+  );
+
+  console.log(selectedExpense);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? 'Edit Expense' : 'Add Expense',
@@ -45,6 +51,7 @@ const ManageExpense = ({ route, navigation }) => {
         submitButtonLabel={isEditing ? 'Update' : 'Add'}
         onCancel={cancelHandler}
         onSubmit={confirmHandler}
+        defaultValues={selectedExpense}
       />
 
       {isEditing && (
