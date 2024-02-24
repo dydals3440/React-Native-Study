@@ -12,15 +12,28 @@ const authenticate = async (mode, email, password) => {
     returnSecureToken: true,
   });
 
-  console.log(response.data);
+  const token = response.data.idToken;
+
+  return token;
 };
 
-const createUser = async (email, password) => {
-  await authenticate('signUp', email, password);
+// 위에서 promise가 token을 산출하기 떄문에, 아래의 async await은 필요없음
+// const createUser = async (email, password) => {
+//   const token = await authenticate('signUp', email, password);
+//   return token;
+// };
+
+const createUser = (email, password) => {
+  return authenticate('signUp', email, password);
 };
 
-const login = async (email, password) => {
-  await authenticate('signInWithPassword', email, password);
+// const login = async (email, password) => {
+//   const token = await authenticate('signInWithPassword', email, password);
+//   return token;
+// };
+
+const login = (email, password) => {
+  return authenticate('signInWithPassword', email, password);
 };
 
 export { createUser, login };
