@@ -1,13 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import { Colors } from './constants/styles';
 import AuthContextProvider, { AuthContext } from './store/auth-context';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import IconButton from './components/ui/IconButton';
 
 const Stack = createNativeStackNavigator();
@@ -46,6 +48,7 @@ function AuthenticatedStack() {
               icon='exit'
               color={tintColor}
               size={24}
+              // () => { authCtx.logout() } 이렇게 해도되고 그냥 point해도됨
               onPress={authCtx.logout}
             />
           ),
@@ -65,12 +68,38 @@ function Navigation() {
   );
 }
 
+function Root() {
+  const [isTryingLogin, setIsTryingLogin] = useState(false);
+  const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      // 그냥 AsyncStorage는, Promise를 반환하기에, async로 감싸주어야함.
+      const storedToken = await AsyncStorage.getItem('token');
+
+      if (storedToken) {
+        authCtx.authenticate(storedToken);
+      }
+
+      setIsTryingLogin(false);
+    };
+
+    fetchToken();
+  }, []);
+
+  if (isTryingLogin) {
+    return <AppLoading />;
+  }
+
+  return <Navigation />;
+}
+
 export default function App() {
   return (
     <>
       <StatusBar style='light' />
       <AuthContextProvider>
-        <Navigation />
+        <Root />
       </AuthContextProvider>
     </>
   );
