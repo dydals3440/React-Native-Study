@@ -17,7 +17,7 @@ import {
   useIsFocused,
 } from '@react-navigation/native';
 
-const LocationPicker = () => {
+const LocationPicker = ({ onPickLocation }) => {
   const [pickedLocation, setPickedLocation] = useState(null);
   // 지도 화면으로 이동하면 false, 새로운 장소 추가하기 화면으로 돌아오면 true
   const isFocused = useIsFocused();
@@ -38,6 +38,10 @@ const LocationPicker = () => {
       setPickedLocation(mapPickedLocation);
     }
   }, [route, isFocused]);
+
+  useEffect(() => {
+    onPickLocation(pickedLocation);
+  }, [pickedLocation, onPickLocation]);
 
   const verifyPermissions = async () => {
     if (
