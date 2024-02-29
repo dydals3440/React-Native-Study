@@ -8,16 +8,37 @@ import {
 
 import OutlinedButton from '../UI/OutlinedButton';
 import { Colors } from '../../constants/colors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getMapPreview } from '../../util/location';
-import { useNavigation } from '@react-navigation/native';
+// useRoute을 통해 라우트 매개변수를 갖고올 수 있음.
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from '@react-navigation/native';
 
 const LocationPicker = () => {
   const [pickedLocation, setPickedLocation] = useState(null);
+  // 지도 화면으로 이동하면 false, 새로운 장소 추가하기 화면으로 돌아오면 true
+  const isFocused = useIsFocused();
 
   const navigation = useNavigation();
+  const route = useRoute();
+
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
+
+  useEffect(() => {
+    if (isFocused && route.params) {
+      // 페이지 이동시, 값 전달해준거 받는법 (map.jsx)
+      const mapPickedLocation = route.params && {
+        lat: route.params.pickedLat,
+        lng: route.params.pickedLng,
+      };
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [route, isFocused]);
+
   const verifyPermissions = async () => {
     if (
       locationPermissionInformation.status === PermissionStatus.UNDETERMINED
