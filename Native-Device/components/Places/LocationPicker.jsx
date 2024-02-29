@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, Text } from 'react-native';
 // 사용자의 현재 위치를 알려주는 함수.
 import {
   getCurrentPositionAsync,
@@ -8,8 +8,14 @@ import {
 
 import OutlinedButton from '../UI/OutlinedButton';
 import { Colors } from '../../constants/colors';
+import { useState } from 'react';
+import { getMapPreview } from '../../util/location';
+import { useNavigation } from '@react-navigation/native';
 
 const LocationPicker = () => {
+  const [pickedLocation, setPickedLocation] = useState(null);
+
+  const navigation = useNavigation();
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
   const verifyPermissions = async () => {
@@ -38,14 +44,32 @@ const LocationPicker = () => {
     }
 
     const location = await getCurrentPositionAsync({});
-    console.log(location);
+    setPickedLocation({
+      lat: location.coords.latitude,
+      lng: location.coords.longitude,
+    });
   };
 
-  const pickOnMapHandler = () => {};
+  const pickOnMapHandler = () => {
+    navigation.navigate('Map');
+  };
+
+  let locationPreview = <Text>No LocationPicked Yet.</Text>;
+
+  if (pickedLocation) {
+    locationPreview = (
+      <Image
+        style={styles.image}
+        source={{
+          uri: getMapPreview(pickedLocation.lat, pickedLocation.lng),
+        }}
+      />
+    );
+  }
 
   return (
     <View>
-      <View style={styles.mapPreview}></View>
+      <View style={styles.mapPreview}>{locationPreview}</View>
       <View style={styles.actions}>
         <OutlinedButton icon='location' onPress={getLocationHandler}>
           Locate User
@@ -74,5 +98,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 4,
   },
 });
