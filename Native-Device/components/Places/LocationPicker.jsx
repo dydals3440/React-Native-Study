@@ -9,7 +9,7 @@ import {
 import OutlinedButton from '../UI/OutlinedButton';
 import { Colors } from '../../constants/colors';
 import { useEffect, useState } from 'react';
-import { getMapPreview } from '../../util/location';
+import { getAddress, getMapPreview } from '../../util/location';
 // useRoute을 통해 라우트 매개변수를 갖고올 수 있음.
 import {
   useNavigation,
@@ -39,8 +39,20 @@ const LocationPicker = ({ onPickLocation }) => {
     }
   }, [route, isFocused]);
 
+  // useEffect는 비동기 함수가 되어서는 안된다. 프로미스를 반환하는 함수가 useEffect에 맞지 않음.
   useEffect(() => {
-    onPickLocation(pickedLocation);
+    // 그래서 함수를 만들어서 관리
+    async function handleLocation() {
+      if (pickedLocation) {
+        const address = await getAddress(
+          pickedLocation.lat,
+          pickedLocation.lng
+        );
+        onPickLocation({ ...pickedLocation, address: address });
+      }
+    }
+
+    handleLocation();
   }, [pickedLocation, onPickLocation]);
 
   const verifyPermissions = async () => {
